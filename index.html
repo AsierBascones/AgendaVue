@@ -31,6 +31,7 @@
 
 <body id="page-top" class="index">
 
+    <div id="app">
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -86,46 +87,55 @@
     <section id="contactos">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Contactos</h2>
-                    <hr class="star-primary">
+                    <div class="col-lg-12 text-center">
+                        <h2>Contactos</h2>
+                        <hr class="star-primary">
+                    </div>
+                </div>
+
+                <!-- BLOQUE 1: Solo se muestra si hay al menos 1 contacto en el array -->
+                <div v-if="contacts.length > 0">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <h4>Nombre</h4>
+                        </div>
+                        <div class="col-xs-4">
+                            <h4>Email</h4>
+                        </div>
+                        <div class="col-xs-3">
+                            <h4>Teléfono</h4>
+                        </div>
+                    </div>
+
+                    <!-- Bucle que repite esta fila por cada contacto del array -->
+                    <div class="row" v-for="(contact, index) in contacts" :key="index">
+                        <div class="col-xs-4">
+                            <p>{{ contact.name }}</p>
+                        </div>
+                        <div class="col-xs-4">
+                            <p>{{ contact.email }}</p>
+                        </div>
+                        <div class="col-xs-3">
+                            <p>{{ contact.phone }}</p>
+                        </div>
+                        <div class="col-xs-1">
+                            <!-- Botón conectado a la función deleteContact pasándole la posición (index) -->
+                            <button type="button" class="btn btn-danger btn-sm" @click="deleteContact(index)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLOQUE 2: Solo se muestra si contacts.length es 0 -->
+                <div v-else>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p>No se ha encontrado ningún contacto.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <h4>Nombre</h4>
-                </div>
-                <div class="col-xs-4">
-                    <h4>Email</h4>
-                </div>
-                <div class="col-xs-3">
-                    <h4>Teléfono</h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <p>John Doe</p>
-                </div>
-                <div class="col-xs-4">
-                    <p>john.doe@deusto.es</p>
-                </div>
-                <div class="col-xs-3">
-                    <p>555555555</p>
-                </div>
-                <div class="col-xs-1">
-                      <button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
-                </div>
-            </div>
-            </div>
-            <div>
-              <div class="row">
-                  <div class="col-xs-12">
-                      <p>No se ha encontrado ningún contacto.</p>
-                  </div>
-              </div>
-            </div>
-        </div>
     </section>
 
     <!-- Añadir nuevo Section -->
@@ -139,30 +149,32 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <form name="sentMessage" id="contactForm" novalidate>
+                    <form name="sentMessage" id="contactForm" @submit.prevent="addContact" novalidate>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Nombre</label>
-                                <input type="text" class="form-control" placeholder="Nombre" id="name">
+                                <label for="name">Nombre</label>
+                                <input type="text" class="form-control" placeholder="Nombre" id="name" v-model="newContact.name">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Email</label>
-                                <input type="email" class="form-control" placeholder="Email" id="email">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" placeholder="Email" id="email" v-model="newContact.email">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Teléfono</label>
-                                <input type="tel" class="form-control" placeholder="Número de teléfono" id="phone">
+                                <label for="phone">Teléfono</label>
+                                <input type="tel" class="form-control" placeholder="Número de teléfono" id="phone" v-model="newContact.phone">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <br>
-                        <div id="success"></div>
+                        <div id="success">
+                            <p class="text-danger" v-if="errorMessage">{{ errorMessage }}</p>
+                        </div>
                         <div class="row">
                             <div class="form-group col-xs-12">
                                 <button type="submit" class="btn btn-success btn-lg">Añadir</button>
@@ -215,6 +227,8 @@
         </a>
     </div>
 
+    </div> <!-- Cierre de #app -->
+
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
@@ -230,7 +244,8 @@
     <script src="js/freelancer.js"></script>
     
     <!-- Vue -->
-    <script src="js/vue.js"></script>   
+    <script src="js/vue.js"></script>
+    <script src="js/app.js"></script> 
 
 </body>
 
