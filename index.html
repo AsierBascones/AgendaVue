@@ -108,7 +108,7 @@
                     </div>
 
                     <!-- Bucle que repite esta fila por cada contacto del array -->
-                    <div class="row" v-for="(contact, index) in contacts" :key="index">
+                    <div class="row" v-for="(contact, index) in contacts" :key="contact.id">
                         <div class="col-xs-4">
                             <p>{{ contact.name }}</p>
                         </div>
@@ -245,6 +245,13 @@
     
     <!-- Vue -->
     <script src="js/vue.js"></script>
+
+    <!-- Firebase 7 (misma versión que tu package.json) -->
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+
+    <!-- Vuefire 2 (ver Vue 2) -->
+    <script src="https://unpkg.com/vuefire@2.2.1/dist/vuefire.js"></script>
     <script src="js/app.js"></script> 
 
 </body>
