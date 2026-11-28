@@ -106,8 +106,8 @@
                         </div>
                     </div>
 
-                    <!-- Bucle que repite esta fila por cada contacto del array -->
-                    <div class="row" v-for="(contact, index) in contacts" :key="contact.id">
+                    <!-- Bucle que repite esta fila por cada contacto recuperado de Firestore -->
+                    <div class="row" v-for="contact in contacts" :key="contact.id">
                         <div class="col-xs-4">
                             <p>{{ contact.name }}</p>
                         </div>
@@ -118,8 +118,8 @@
                             <p>{{ contact.phone }}</p>
                         </div>
                         <div class="col-xs-1">
-                            <!-- Botón conectado a la función deleteContact -->
-                            <button type="button" class="btn btn-danger btn-sm" @click="deleteContact(index)">
+                            <!-- Botón conectado a la función deleteContact pasándole el ID del documento -->
+                            <button type="button" class="btn btn-danger btn-sm" @click="deleteContact(contact.id)">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </div>
